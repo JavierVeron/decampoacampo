@@ -32,4 +32,5 @@ RUN composer install --no-interaction --no-scripts --no-autoloader
 
 COPY . .
 
-RUN composer dump-autoload --optimize
+RUN composer dump-autoload --optimize && \
+    chown -R www-data:www-data /var/www/html
