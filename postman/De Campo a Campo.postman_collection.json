@@ -1,0 +1,142 @@
+{
+  "info": {
+    "_postman_id": "e987beaa-d773-4aec-9fc3-535497563f97",
+    "name": "De Campo a Campo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20279544"
+  },
+  "item": [
+    {
+      "name": "Get All",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/productos/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "productos",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/decampoacampo/api/productos/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "decampoacampo",
+            "api",
+            "productos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Oveja\",\r\n    \"descripcion\":\"La oveja ​ es un mamífero cuadrúpedo ungulado doméstico, utilizado como ganado.\",\r\n    \"precio\":800000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/decampoacampo/api/productos/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "decampoacampo",
+            "api",
+            "productos",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Ovejitaa\",\r\n    \"descripcion\":\"La ovejitaa ​ es un mamífero cuadrúpedo ungulado doméstico, utilizado como ganado.\",\r\n    \"precio\":1600000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/decampoacampo/api/productos/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "decampoacampo",
+            "api",
+            "productos",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Oveja\",\r\n    \"descripcion\":\"La oveja ​ es un mamífero cuadrúpedo ungulado doméstico, utilizado como ganado.\",\r\n    \"precio\":800000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/decampoacampo/api/productos/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "decampoacampo",
+            "api",
+            "productos",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
