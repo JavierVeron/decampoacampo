@@ -34,7 +34,7 @@ Body Parameters (JSON):<br>
 </pre>
 
 <pre>
-<p>http://localhost:8080/api/productos/2<br>
+<p>http://localhost:8080/api/productos/{id}<br>
 Method: <b>PUT</b><br>
 Parameters:<br>
 <b>id</b> => integer<br>
