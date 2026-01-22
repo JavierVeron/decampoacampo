@@ -26,8 +26,8 @@ Parameters:<br>
 
 <pre>
 <p>http://localhost:8080/api/productos<br>
-Method: <b>POST</b></p>
-Parameters:<br>
+Method: <b>POST</b><br>
+Body Parameters (JSON):<br>
 <b>nombre</b> => string<br>
 <b>descripcion</b> => string<br>
 <b>precio</b> => float</p>
@@ -35,8 +35,10 @@ Parameters:<br>
 
 <pre>
 <p>http://localhost:8080/api/productos/2<br>
-Method: <b>PUT</b></p>
+Method: <b>PUT</b><br>
 Parameters:<br>
+<b>id</b> => integer<br>
+Body Parameters (JSON):<br>
 <b>nombre</b> => string<br>
 <b>descripcion</b> => string<br>
 <b>precio</b> => float</p>
