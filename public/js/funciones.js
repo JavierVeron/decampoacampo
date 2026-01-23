@@ -1,9 +1,8 @@
 const HOST = location.href;
-const miModal = new bootstrap.Modal('#miModal', {keyboard:false});
-const miToast = document.getElementById("miToast");
-const toast = new bootstrap.Toast(miToast, {
-    delay: 3000 
-});
+const modalFormulario = new bootstrap.Modal('#modalFormulario', {keyboard:false});
+const modalConfirmacion = new bootstrap.Modal('#modalConfirmacion', {keyboard:false});
+const toastNotificacion = document.getElementById("toastNotificacion");
+const toast = new bootstrap.Toast(toastNotificacion, {delay: 3000});
 
 const cargarLoading = () => {
     const contenido = document.querySelector("#contenido");
@@ -36,7 +35,7 @@ const renderTablaProductos = (productos) => {
         if (productos.length == 0) {
             contenidoHTML = `<p class="text-center display-1"><i class="bi bi-recycle"></i></p>
             <h3 class="text-center fw-bold">No se encontraron Productos!</h3>
-            <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#miModal">Agregar <i class="bi bi-plus-square"></i></button></p>`;
+            <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario">Agregar <i class="bi bi-plus-square"></i></button></p>`;
             contenido.innerHTML = contenidoHTML;
 
             return false;
@@ -50,7 +49,7 @@ const renderTablaProductos = (productos) => {
             <th scope="col">Descripción</th>
             <th scope="col">Precio</th>
             <th scope="col" class="text-end">
-            <button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#miModal" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
+            <button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
             </th>
             </tr>
         </thead>
@@ -64,7 +63,7 @@ const renderTablaProductos = (productos) => {
             contenidoHTML += `<td>u$s ${item.precio}</td>`;
             contenidoHTML += `<td class="text-end">
             <button class="btn btn-light btn-sm me-1" title="Editar" onclick="abrirForm('edit', ${item.id});">Editar <i class="bi bi-pencil-square"></i></button>
-            <button class="btn btn-light btn-sm" title="Eliminar" onclick="eliminarProducto(${item.id});">Eliminar <i class="bi bi-trash"></i></button>
+            <button class="btn btn-light btn-sm" title="Eliminar" onclick="confirmarEliminacionProducto(${item.id});">Eliminar <i class="bi bi-trash"></i></button>
             </td>`;
             contenidoHTML += `</tr>`;
         }
@@ -103,7 +102,7 @@ const agregarProducto = async () => {
         });
         const resultado = await response.json();
         mostrarToast(resultado, "ok");
-        document.querySelector("#btnFormCerrar").click();
+        document.querySelector("#btnFormularioCerrar").click();
         renderProductos();
     } catch (error) {
         mostrarToast("Error en la carga del Producto!", "error");
@@ -152,11 +151,11 @@ const editarProducto = async (id) => {
     }
 
     limpiarForm();
-    miModal.hide();
+    modalFormulario.hide();
 }
 
 const eliminarProducto = async (id) => {
-    try {
+    try {        
         if (!Number.isInteger(id)) {
             throw new Error("El ID debe ser un valor Numérico!");
         }
@@ -189,13 +188,24 @@ const abrirForm = async (action, id=0) => {
         action == "add" ? agregarProducto() : editarProducto(id);
     }
 
-    miModal.show();
+    modalFormulario.show();
 }
 
 const limpiarForm = () => {
     document.querySelector("#nombre").value = "";
     document.querySelector("#descripcion").value = "";
     document.querySelector("#precio").value = "";
+}
+
+const confirmarEliminacionProducto = (id) => {
+    const mensajeConfirmacion = document.querySelector("#mensajeConfirmacion");
+    const btnConfirmacionAceptar = document.querySelector("#btnConfirmacionAceptar");
+    mensajeConfirmacion.innerHTML = "Está seguro que desea eliminar el Producto #" + id + "?";
+    btnConfirmacionAceptar.onclick = () => {
+        eliminarProducto(id);
+    }
+
+    modalConfirmacion.show();
 }
 
 const mostrarMensaje = (mensaje, tipo) => {
@@ -205,11 +215,11 @@ const mostrarMensaje = (mensaje, tipo) => {
 
 const mostrarToast = (mensaje, tipo) => {   
     if (tipo == "ok") {
-        miToast.classList.remove("bg-danger");
-        miToast.classList.add("bg-success");
+        toastNotificacion.classList.remove("bg-danger");
+        toastNotificacion.classList.add("bg-success");
     } else {
-        miToast.classList.remove("bg-success");
-        miToast.classList.add("bg-danger");
+        toastNotificacion.classList.remove("bg-success");
+        toastNotificacion.classList.add("bg-danger");
     }
 
     const mensajeToast = document.querySelector("#mensajeToast");    

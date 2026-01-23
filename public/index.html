@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalFormulario" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -49,14 +49,32 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnFormEnviar">Enviar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFormCerrar" onclick="limpiarForm()">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFormularioCerrar" onclick="limpiarForm()">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalConfirmacion" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeConfirmacion"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnConfirmacionAceptar">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
             </div>
         </div>
     </div>
 
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="miToast" class="toast text-white" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <div id="toastNotificacion" class="toast text-white" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
             <div class="toast-header">
                 <strong class="me-auto">Notificación</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
