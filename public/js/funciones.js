@@ -170,6 +170,8 @@ const eliminarProducto = async (id) => {
         mostrarToast("Error en la eliminación del Producto!", "error");
         console.error(error);   
     }
+
+    modalConfirmacion.hide();
 }
 
 const abrirForm = async (action, id=0) => {
