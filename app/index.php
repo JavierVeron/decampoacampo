@@ -27,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-$database = new Database();
-$db = $database->conectar();
+$db = Database::getInstance()->getConnection();
 $controller = new ProductoController($db);
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -42,7 +41,7 @@ if ($key === false) {
     exit();
 }
 
-$id = isset($uri[$key + 1]) ? (int)$uri[$key + 1] : null;
+$id = isset($uri[$key + 1]) ? $uri[$key + 1] : null;
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch($method) {

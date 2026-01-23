@@ -33,16 +33,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost/decampoacampo/api/productos/2",
+          "raw": "http://localhost:8080/api/productos/1",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "decampoacampo",
             "api",
             "productos",
-            "2"
+            "1"
           ]
         }
       },
@@ -63,13 +63,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost/decampoacampo/api/productos/",
+          "raw": "http://localhost:8080/api/productos/",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "decampoacampo",
             "api",
             "productos",
             ""
@@ -85,7 +85,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"nombre\":\"Ovejitaa\",\r\n    \"descripcion\":\"La ovejitaa ​ es un mamífero cuadrúpedo ungulado doméstico, utilizado como ganado.\",\r\n    \"precio\":1600000\r\n}",
+          "raw": "{\r\n    \"nombre\":\"0v3j1t4\",\r\n    \"descripcion\":\"La 0v3j1t4​ es un mamífero cuadrúpedo ungulado doméstico, utilizado como ganado.\",\r\n    \"precio\":1600000\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -93,13 +93,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost/decampoacampo/api/productos/5",
+          "raw": "http://localhost:8080/api/productos/5",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "decampoacampo",
             "api",
             "productos",
             "5"
@@ -123,13 +123,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost/decampoacampo/api/productos/5",
+          "raw": "http://localhost:8080/api/productos/5",
           "protocol": "http",
           "host": [
             "localhost"
           ],
+          "port": "8080",
           "path": [
-            "decampoacampo",
             "api",
             "productos",
             "5"

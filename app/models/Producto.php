@@ -3,17 +3,17 @@
 namespace App\Models;
 
 class Producto {
-    private $tabla = "productos";
+    static private $tabla = "productos";
 
     public $id;
     public $nombre;
     public $descripcion;
     public $precio;
 
-    /* static function getTable()
+    static function getTable()
     {
-        return $this->tabla;
-    } */
+        return self::$tabla;
+    }
 
     static public function convertirADolar($precio) {
         return round($precio / $_ENV["PRECIO_USD"]);

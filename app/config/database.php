@@ -1,18 +1,29 @@
 <?php
 
 class Database {
+    private static $instance = null;
+    private $connection;
+
     private $host;
     private $db_name;
     private $username;
     private $password;
-    public $conn;
+    private $charset;
 
-    public function __construct() {
-        $this->loadEnv('../.env');
+    private function __construct() {
+        $this->loadEnv("../.env");
         $this->host = $_ENV["DB_HOST"];
         $this->db_name = $_ENV["DB_NAME"];
         $this->username = $_ENV["DB_USER"];
         $this->password = $_ENV["DB_PASSWORD"];
+        $this->charset = "utf8mb4";
+        
+        try {
+            $dsn = "mysql:host=$this->host;dbname=$this->db_name;charset=$this->charset";
+            $this->connection = new PDO($dsn, $this->username, $this->password);
+        } catch (PDOException $e) {
+            throw new Exception("Error de conexión: " . $e->getMessage());
+        }
     }
 
     private function loadEnv($path) {
@@ -32,20 +43,20 @@ class Database {
         }
     }
 
-    public function conectar() {
-        $this->conn = null;
-
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
-        } catch(PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new Database();
         }
-
-        return $this->conn;
+        return self::$instance;
     }
 
-    public function cerrar() {
-        $this->conn = null;
+    public function getConnection() {
+        return $this->connection;
+    }
+
+    private function __clone() { }
+
+    public function __wakeup() {
+        throw new Exception("No se puede deserializar una instancia de Singleton.");
     }
 }

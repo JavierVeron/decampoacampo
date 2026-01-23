@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Repositories\ProductoRepository;
+use Exception;
 
 class ProductoController {
     private $producto;
@@ -18,30 +19,100 @@ class ProductoController {
     }
 
     public function getById($id) {
-        $producto = $this->producto->getById($id);
-        http_response_code($producto ? 200 : 422);
-        echo json_encode($producto ? $producto : "No se encontró el Producto #$id!");
+        try {
+            if (!is_numeric($id)) {
+                throw new Exception("El parámetro 'id' debe ser un valor Numérico!");
+            }
+            
+            $producto = $this->producto->getById($id);
+            http_response_code($producto ? 200 : 422);
+            echo json_encode($producto ? $producto : "No se encontró el Producto #$id!");
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+        }
     }
 
     public function create() {
-        $json = file_get_contents("php://input");
-        $data = json_decode($json, true);
-        $producto = $this->producto->create($data);
-        http_response_code($producto ? 201 : 422);
-        echo json_encode($producto ? "El producto se creó correctamente!" : "No se pudo crear el Producto!");
+        try {
+            $json = file_get_contents("php://input");
+            $data = json_decode($json, true);
+
+            if (!isset($data["nombre"])) {
+                throw new Exception("Falta completar el parámetro 'nombre'!");
+            } else if (!is_string($data["nombre"])) {
+                throw new Exception("El parámetro 'nombre' debe ser un valor String!");
+            }
+
+            if (!isset($data["descripcion"])) {
+                throw new Exception("Falta completar el parámetro 'descripcion'!");
+            } else if (!is_string($data["descripcion"])) {
+                throw new Exception("El parámetro 'descripcion' debe ser un valor String!");
+            }
+
+            if (!isset($data["precio"])) {
+                throw new Exception("Falta completar el parámetro 'precio'!");
+            } else if (!is_numeric($data["precio"])) {
+                throw new Exception("El parámetro 'precio' debe ser un valor Numérico!");
+            }
+
+            $producto = $this->producto->create($data);
+            http_response_code($producto ? 201 : 422);
+            echo json_encode($producto ? "El producto se creó correctamente!" : "No se pudo crear el Producto!");
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+        }
     }
 
     public function update($id) {
-        $json = file_get_contents("php://input");
-        $data = json_decode($json, true);
-        $resultado = $this->producto->update($id, $data);
-        http_response_code($resultado > 0 ? 200 : 422);
-        echo json_encode($resultado > 0 ? "El producto #$id se actualizó correctamente!" : "No se pudo actualizar el Producto #$id!");
+        try {
+            if (!is_numeric($id)) {
+                throw new Exception("El parámetro 'id' debe ser un valor Numérico!");
+            }
+
+            $json = file_get_contents("php://input");
+            $data = json_decode($json, true);
+
+            if (!isset($data["nombre"])) {
+                throw new Exception("Falta completar el parámetro 'nombre'!");
+            } else if (!is_string($data["nombre"])) {
+                throw new Exception("El parámetro 'nombre' debe ser un valor String!");
+            }
+
+            if (!isset($data["descripcion"])) {
+                throw new Exception("Falta completar el parámetro 'descripcion'!");
+            } else if (!is_string($data["descripcion"])) {
+                throw new Exception("El parámetro 'descripcion' debe ser un valor String!");
+            }
+
+            if (!isset($data["precio"])) {
+                throw new Exception("Falta completar el parámetro 'precio'!");
+            } else if (!is_numeric($data["precio"])) {
+                throw new Exception("El parámetro 'precio' debe ser un valor Numérico!");
+            }
+
+            $resultado = $this->producto->update($id, $data);
+            http_response_code($resultado > 0 ? 200 : 422);
+            echo json_encode($resultado > 0 ? "El producto #$id se actualizó correctamente!" : "No se pudo actualizar el Producto #$id!");
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+        }
     }
 
     public function delete($id) {
-        $resultado = $this->producto->delete($id);
-        http_response_code($resultado > 0 ? 200 : 422);
-        echo json_encode($resultado > 0 ? "El producto #$id se eliminó correctamente!" : "No se pudo eliminar el Producto #$id!");
+        try {
+            if (!is_numeric($id)) {
+                throw new Exception("El parámetro 'id' debe ser un valor Numérico!");
+            }
+
+            $resultado = $this->producto->delete($id);
+            http_response_code($resultado > 0 ? 200 : 422);
+            echo json_encode($resultado > 0 ? "El producto #$id se eliminó correctamente!" : "No se pudo eliminar el Producto #$id!");
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+        }
     }
 }
