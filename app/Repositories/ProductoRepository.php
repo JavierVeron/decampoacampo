@@ -24,7 +24,7 @@ class ProductoRepository implements ProductoRepositoryInterface
         $offset = ($page - 1) * $limit;
         $cacheKey = "productos_p_#{$page}_l_#{$limit}";
 
-        //$resultado = $this->cache->remember($cacheKey, TTL, function() use ($limit, $offset) {
+        $resultado = $this->cache->remember($cacheKey, TTL, function() use ($limit, $offset) {
             $query = "SELECT * FROM " .Producto::getTable() ." LIMIT :limit OFFSET :offset";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
@@ -53,9 +53,9 @@ class ProductoRepository implements ProductoRepositoryInterface
                     "limit" => (int)$limit
                 ]
             ];
-        //});
+        });
 
-        //return $resultado;
+        return $resultado;
     }
 
     public function getById(int $id)
@@ -113,8 +113,6 @@ class ProductoRepository implements ProductoRepositoryInterface
         $resultado = $stmt->rowCount();
 
         if ($resultado) {
-            //$this->cache->delete('productos_all');
-            //$this->cache->delete("producto_" . $id);
             $this->cache->flush();
         }
 
@@ -132,8 +130,6 @@ class ProductoRepository implements ProductoRepositoryInterface
         $resultado = $stmt->rowCount();
         
         if ($resultado) {
-            //$this->cache->delete('productos_all');
-            //$this->cache->delete("producto_" . $id);
             $this->cache->flush();
         }
         
