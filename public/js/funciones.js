@@ -1,4 +1,4 @@
-const HOST = location.href;
+const HOST = location.protocol + "//" + location.host;
 const modalFormulario = new bootstrap.Modal('#modalFormulario', {keyboard:false});
 const modalConfirmacion = new bootstrap.Modal('#modalConfirmacion', {keyboard:false});
 const toastNotificacion = document.getElementById("toastNotificacion");
@@ -13,7 +13,11 @@ const cargarLoading = () => {
 
 const cargarProductos = async () => {
     try {        
-        const response = await fetch(HOST + "/api/productos/");
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const page = urlParams.get('page') ? urlParams.get('page') : 1;
+        const limit = urlParams.get('limit') ? urlParams.get('limit') : 10;
+        const response = await fetch(HOST + "/api/productos/?page=" + page + "&limit=" + limit);
         const data = await response.json();
     
         return data;
@@ -24,15 +28,15 @@ const cargarProductos = async () => {
 }
 
 const renderTablaProductos = (productos) => {
-    try {
-        if (!Array.isArray(productos)) {
+    try {        
+        if (!Array.isArray(productos.data)) {
             throw new Error("El parámetro debe ser un Array!");
         }
 
         const contenido = document.querySelector("#contenido");
         let contenidoHTML;
 
-        if (productos.length == 0) {
+        if (productos.data.length == 0) {
             contenidoHTML = `<p class="text-center display-1"><i class="bi bi-recycle"></i></p>
             <h3 class="text-center fw-bold">No se encontraron Productos!</h3>
             <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario">Agregar <i class="bi bi-plus-square"></i></button></p>`;
@@ -48,6 +52,7 @@ const renderTablaProductos = (productos) => {
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
             <th scope="col">Precio</th>
+            <th scope="col">Precio USD</th>
             <th scope="col" class="text-end">
             <button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
             </th>
@@ -55,12 +60,13 @@ const renderTablaProductos = (productos) => {
         </thead>
         <tbody>`;
 
-        for (const item of productos) {
+        for (const item of productos.data) {
             contenidoHTML += `<tr>`;
             contenidoHTML += `<td>${item.id}</td>`;
             contenidoHTML += `<td>${item.nombre}</td>`;
             contenidoHTML += `<td>${item.descripcion}</td>`;
-            contenidoHTML += `<td>u$s ${item.precio}</td>`;
+            contenidoHTML += `<td>$ ${item.precio}</td>`;
+            contenidoHTML += `<td>u$s ${item.precio_usd}</td>`;
             contenidoHTML += `<td class="text-end">
             <button class="btn btn-light btn-sm me-1" title="Editar" onclick="abrirForm('edit', ${item.id});">Editar <i class="bi bi-pencil-square"></i></button>
             <button class="btn btn-light btn-sm" title="Eliminar" onclick="confirmarEliminacionProducto(${item.id});">Eliminar <i class="bi bi-trash"></i></button>
@@ -69,7 +75,16 @@ const renderTablaProductos = (productos) => {
         }
 
         contenidoHTML += `</tbody>
-        </table>`;
+        </table>
+        <div class="my-5 text-center">
+            <div class="btn-group" role="group">
+                <a href="/?page=1" class="btn btn-light"><i class="bi bi-chevron-double-left"></i></a>
+                <a ${productos.pagination.prevPage ? `href="/?page=${productos.pagination.prevPage}"` : "disabled='disabled'"} class="btn btn-light"><i class="bi bi-chevron-left"></i></a>
+                <button type="button" class="btn btn-light">${productos.pagination.currentPage}</button>
+                <a ${productos.pagination.nextPage ? `href="/?page=${productos.pagination.nextPage}"` : "disabled='disabled'"} class="btn btn-light"><i class="bi bi-chevron-right"></i></a>
+                <a href="/?page=${productos.pagination.totalPages}" class="btn btn-light"><i class="bi bi-chevron-double-right"></i></a>
+            </div>
+        </div>`;
         contenido.innerHTML = contenidoHTML;      
     } catch (error) {
         mostrarMensaje("Error en Renderizar la Tabla!", "error");

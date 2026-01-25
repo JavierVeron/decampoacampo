@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\Database;
 use App\Controllers\ProductoController;
 
 spl_autoload_register(function ($class) {
@@ -15,7 +16,6 @@ spl_autoload_register(function ($class) {
 });
 
 require_once '../vendor/autoload.php';
-require_once 'config/database.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

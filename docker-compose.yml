@@ -10,12 +10,19 @@ services:
     volumes:
       - ./database/decampoacampo.sql:/docker-entrypoint-initdb.d/init.sql
       - db_data:/var/lib/mysql
+  
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
 
   php:
     build: .
     restart: always
     depends_on:
       - db
+      - redis
     ports:
       - "8080:80"
     volumes:

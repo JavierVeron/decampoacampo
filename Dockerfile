@@ -1,13 +1,10 @@
 FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip \
-    libmariadb-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-install mysqli pdo_mysql
+    git unzip zip libmariadb-dev \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && docker-php-ext-install mysqli pdo_mysql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

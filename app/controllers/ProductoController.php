@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Repositories\ProductoRepository;
 use Exception;
+use App\Repositories\ProductoRepository;
 
 class ProductoController {
     private $producto;
@@ -13,7 +13,9 @@ class ProductoController {
     }
 
     public function getAll() {
-        $productos = $this->producto->getAll();
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        $productos = $this->producto->getAll($page, $limit);
         http_response_code(200);
         echo json_encode($productos);
     }
@@ -58,7 +60,7 @@ class ProductoController {
 
             $producto = $this->producto->create($data);
             http_response_code($producto ? 201 : 422);
-            echo json_encode($producto ? "El producto se creó correctamente!" : "No se pudo crear el Producto!");
+            echo json_encode($producto ? "El producto se creó correctamente!" : "No se creó el Producto!");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
@@ -93,8 +95,8 @@ class ProductoController {
             }
 
             $resultado = $this->producto->update($id, $data);
-            http_response_code($resultado > 0 ? 200 : 422);
-            echo json_encode($resultado > 0 ? "El producto #$id se actualizó correctamente!" : "No se pudo actualizar el Producto #$id!");
+            http_response_code($resultado ? 200 : 422);
+            echo json_encode($resultado ? "El producto #$id se actualizó correctamente!" : "No se actualizó el Producto #$id!");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
@@ -109,7 +111,7 @@ class ProductoController {
 
             $resultado = $this->producto->delete($id);
             http_response_code($resultado > 0 ? 200 : 422);
-            echo json_encode($resultado > 0 ? "El producto #$id se eliminó correctamente!" : "No se pudo eliminar el Producto #$id!");
+            echo json_encode($resultado > 0 ? "El producto #$id se eliminó correctamente!" : "No se eliminó el Producto #$id!");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());

@@ -3,7 +3,8 @@
 namespace App\Models;
 
 class Producto {
-    static private $tabla = "productos";
+    static private $table = "productos";
+    static private $outputFields = ["id", "nombre", "descripcion", "precio", "precio_usd"];
 
     public $id;
     public $nombre;
@@ -12,10 +13,15 @@ class Producto {
 
     static function getTable()
     {
-        return self::$tabla;
+        return self::$table;
     }
 
-    static public function convertirADolar($precio) {
+    static function outputFields()
+    {
+        return self::$outputFields;
+    }
+
+    static public function convertirPesosADolar($precio) {
         return round($precio / $_ENV["PRECIO_USD"]);
     }
 }
