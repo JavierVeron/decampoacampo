@@ -39,7 +39,7 @@ const renderTablaProductos = (productos) => {
         if (productos.data.length == 0) {
             contenidoHTML = `<p class="text-center display-1"><i class="bi bi-recycle"></i></p>
             <h3 class="text-center fw-bold">No se encontraron Productos!</h3>
-            <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button></p>`;
+            <p class="text-center my-5"><button class="btn bg-secondary-subtle btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button></p>`;
             contenido.innerHTML = contenidoHTML;
 
             return false;
@@ -54,7 +54,7 @@ const renderTablaProductos = (productos) => {
             <th scope="col">Precio</th>
             <th scope="col">Precio USD</th>
             <th scope="col" class="text-end">
-            <button class="btn btn-light btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
+            <button class="btn bg-secondary-subtle btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
             </th>
             </tr>
         </thead>
@@ -68,8 +68,8 @@ const renderTablaProductos = (productos) => {
             contenidoHTML += `<td>$ ${item.precio}</td>`;
             contenidoHTML += `<td>u$s ${item.precio_usd}</td>`;
             contenidoHTML += `<td class="text-end">
-            <button class="btn btn-light btn-sm me-1" title="Editar" onclick="abrirForm('edit', ${item.id});">Editar <i class="bi bi-pencil-square"></i></button>
-            <button class="btn btn-light btn-sm" title="Eliminar" onclick="confirmarEliminacionProducto(${item.id});">Eliminar <i class="bi bi-trash"></i></button>
+            <button class="btn bg-secondary-subtle btn-sm me-1" title="Editar" onclick="abrirForm('edit', ${item.id});">Editar <i class="bi bi-pencil-square"></i></button>
+            <button class="btn bg-secondary-subtle btn-sm" title="Eliminar" onclick="confirmarEliminacionProducto(${item.id});">Eliminar <i class="bi bi-trash"></i></button>
             </td>`;
             contenidoHTML += `</tr>`;
         }
@@ -78,11 +78,11 @@ const renderTablaProductos = (productos) => {
         </table>
         <div class="my-5 text-center">
             <div class="btn-group" role="group">
-                <a href="/?page=1" class="btn btn-light"><i class="bi bi-chevron-double-left"></i></a>
-                <a ${productos.pagination.prevPage ? `href="/?page=${productos.pagination.prevPage}"` : "disabled='disabled'"} class="btn btn-light"><i class="bi bi-chevron-left"></i></a>
-                <button type="button" class="btn btn-light">${productos.pagination.currentPage}</button>
-                <a ${productos.pagination.nextPage ? `href="/?page=${productos.pagination.nextPage}"` : "disabled='disabled'"} class="btn btn-light"><i class="bi bi-chevron-right"></i></a>
-                <a href="/?page=${productos.pagination.totalPages}" class="btn btn-light"><i class="bi bi-chevron-double-right"></i></a>
+                <a href="/?page=1" class="btn bg-secondary-subtle"><i class="bi bi-chevron-double-left"></i></a>
+                <a ${productos.pagination.prevPage ? `href="/?page=${productos.pagination.prevPage}"` : "disabled='disabled'"} class="btn bg-secondary-subtle"><i class="bi bi-chevron-left"></i></a>
+                <button type="button" class="btn bg-secondary-subtle">${productos.pagination.currentPage}</button>
+                <a ${productos.pagination.nextPage ? `href="/?page=${productos.pagination.nextPage}"` : "disabled='disabled'"} class="btn bg-secondary-subtle"><i class="bi bi-chevron-right"></i></a>
+                <a href="/?page=${productos.pagination.totalPages}" class="btn bg-secondary-subtle"><i class="bi bi-chevron-double-right"></i></a>
             </div>
         </div>`;
         contenido.innerHTML = contenidoHTML;      
