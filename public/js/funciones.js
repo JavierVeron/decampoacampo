@@ -39,7 +39,7 @@ const renderTablaProductos = (productos) => {
         if (productos.data.length == 0) {
             contenidoHTML = `<p class="text-center display-1"><i class="bi bi-recycle"></i></p>
             <h3 class="text-center fw-bold">No se encontraron Productos!</h3>
-            <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario">Agregar <i class="bi bi-plus-square"></i></button></p>`;
+            <p class="text-center my-5"><button class="btn btn-light btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button></p>`;
             contenido.innerHTML = contenidoHTML;
 
             return false;
@@ -54,7 +54,7 @@ const renderTablaProductos = (productos) => {
             <th scope="col">Precio</th>
             <th scope="col">Precio USD</th>
             <th scope="col" class="text-end">
-            <button class="btn btn-light btn-sm" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalFormulario" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
+            <button class="btn btn-light btn-sm" title="Agregar" onclick="abrirForm('add');">Agregar <i class="bi bi-plus-square"></i></button>
             </th>
             </tr>
         </thead>
