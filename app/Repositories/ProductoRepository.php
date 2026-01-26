@@ -6,7 +6,6 @@ use PDO;
 use Exception;
 use App\Models\Producto;
 use App\Classes\CacheManager;
-use App\Classes\Logger;
 use App\Interfaces\ProductoRepositoryInterface;
 const TTL = 3600;
 
@@ -115,8 +114,6 @@ class ProductoRepository implements ProductoRepositoryInterface
         if ($resultado) {
             $this->cache->flush();
         }
-
-        Logger::info($resultado);
         
         return $resultado;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Classes\Logger;
 use Exception;
 use App\Repositories\ProductoRepository;
 
@@ -61,9 +62,11 @@ class ProductoController {
             $producto = $this->producto->create($data);
             http_response_code($producto ? 201 : 422);
             echo json_encode($producto ? "El producto se creó correctamente!" : "No se creó el Producto!");
+            Logger::info("Se creó un nuevo Producto! => [" .implode(', ', $data) ."]");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
+            Logger::error("Error en la creación del Producto => [" .implode(', ', $data) ."]");
         }
     }
 
@@ -97,9 +100,11 @@ class ProductoController {
             $resultado = $this->producto->update($id, $data);
             http_response_code($resultado ? 200 : 422);
             echo json_encode($resultado ? "El producto #$id se actualizó correctamente!" : "No se actualizó el Producto #$id!");
+            Logger::info("Se editó el Producto #$id => [" .implode(', ', $data) ."]");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
+            Logger::error("Error en la edición del Producto #$id => [" .implode(', ', $data) ."]");
         }
     }
 
@@ -112,9 +117,11 @@ class ProductoController {
             $resultado = $this->producto->delete($id);
             http_response_code($resultado > 0 ? 200 : 422);
             echo json_encode($resultado > 0 ? "El producto #$id se eliminó correctamente!" : "No se eliminó el Producto #$id!");
+            Logger::info("Se eliminó el Producto #$id");
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
+            Logger::error("Error en la eliminación del Producto #$id");
         }
     }
 }
